@@ -10,13 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_26_195956) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_27_030001) do
+  create_table "escolas", force: :cascade do |t|
+    t.string "cnpj"
+    t.string "nome"
+    t.string "end"
+    t.string "cep"
+    t.string "tel"
+    t.string "diretor"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "professores", force: :cascade do |t|
+    t.string "cfp"
+    t.string "nome"
+    t.string "nascimento"
+    t.string "tel"
+    t.string "email"
+    t.string "end"
+    t.string "cep"
+    t.integer "escolas_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["escolas_id"], name: "index_professores_on_escolas_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +61,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_26_195956) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "professores", "escolas", column: "escolas_id"
 end

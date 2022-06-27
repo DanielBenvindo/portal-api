@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :escolas do
+    resources :professores
+  end
+  
   devise_for :users,
               controllers: {
                 sessions: 'users/sessions',
